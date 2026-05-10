@@ -55,24 +55,30 @@ export class AuthService {
     email: string,
     password: string,
   ) {
+    console.log('Login attempt for email:', email);
     const user =
       await this.userRepository.findOne({
         where: { email },
       });
 
     if (!user) {
+      console.log('User not found');
       throw new UnauthorizedException(
         'Invalid credentials',
       );
     }
 
+    console.log('User found, comparing passwords...');
     const isPasswordValid =
       await bcrypt.compare(
         password,
         user.password,
       );
 
+    console.log('Password valid:', isPasswordValid);
+
     if (!isPasswordValid) {
+      console.log('Password comparison failed');
       throw new UnauthorizedException(
         'Invalid credentials',
       );
