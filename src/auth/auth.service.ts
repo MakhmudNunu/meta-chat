@@ -55,7 +55,7 @@ export class AuthService {
     email: string,
     password: string,
   ) {
-    console.log('Login attempt for email:', email);
+     console.log('Login attempt for email:', email);
     const user =
       await this.userRepository.findOne({
         where: { email },
@@ -90,12 +90,19 @@ export class AuthService {
         email: user.email,
       });
 
-    return {
+    console.log('Token created successfully');
+    console.log('Returning token and user data');
+
+    const response = {
       access_token: token,
       user: {
         id: user.id,
         email: user.email
       }
     };
+
+    console.log('Response:', JSON.stringify(response));
+
+    return response;
   }
 }
