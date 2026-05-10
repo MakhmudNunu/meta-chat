@@ -29,7 +29,7 @@ export class ChatController {
 
   @Get('my-chats')
   async getMyChats(@Req() req: Request) {
-    const myUserId = req['user'].userId;
+    const myUserId = Number(req['user'].userId);
 
     const chats = await this.chatRoomRepository.find({
       where: [{ userOneId: myUserId }, { userTwoId: myUserId }],
@@ -64,7 +64,7 @@ export class ChatController {
     @Body('partnerEmail') partnerEmail: string,
     @Req() req: Request,
   ) {
-    const myUserId = req['user'].id;
+    const myUserId = Number(req['user'].userId);
 
     const partner = await this.userRepository.findOne({
       where: { email: partnerEmail },
